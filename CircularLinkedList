@@ -23,7 +23,6 @@ class linkedlist{
     void insertafter(int exist, int val);
     void insertbefore(int exist, int val);
     void deletehead();
-    void deletelast();
     void deletespecific(int del);
     void traverse();
 
@@ -131,23 +130,6 @@ void linkedlist::deletehead(){
     }
 }
 
-void linkedlist::deletelast(){
-    if(head==0){
-        cout<<"List is already empty.."<<endl;
-    }
-    else{
-        node* currnode=head;
-        node* prev=0;
-        while(currnode->next!=head){
-            prev=currnode;
-            currnode=currnode->next;
-        }
-        prev->next=currnode->next;
-        currnode->next=0;
-        delete currnode;
-
-    }
-}
 
 void linkedlist::deletespecific(int del){
     if(head==0){
@@ -232,7 +214,7 @@ int main(){
             }
             break;
         case 2:
-        cout<<"1: For Delete from head\n2. For Delete from tail\n3. Delete Specific"<<endl;
+        cout<<"1: For Delete from head\n2. Delete Specific"<<endl;
         cin>>choice1;
         switch (choice1)
         {
@@ -240,9 +222,6 @@ int main(){
             ls.deletehead();
             break;
         case 2:
-            ls.deletelast();
-            break;
-        case 3:
             cout<<"Enter the no you want to delete.."<<endl;
             int del;
             cin>>del;
