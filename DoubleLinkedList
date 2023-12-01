@@ -1,6 +1,17 @@
 #include<iostream>
-#include"doubleL.h"
 using namespace std;
+class dnode{
+    public:
+    int data;
+    dnode* next;
+    dnode* prev;
+    dnode(int d=0,dnode* n=0,dnode* p=0){
+        data=d;
+        next=n;
+        prev=p;
+    }
+};
+
 class dlinkedlist{
     private:
         dnode*head;
