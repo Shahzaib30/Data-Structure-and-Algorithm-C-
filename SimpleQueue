@@ -1,0 +1,122 @@
+#include<iostream>
+using namespace std;
+class queue{
+
+    private:
+    double *queuearray;
+    int top;
+    int rear;
+    int qsize;
+    public:
+    queue(int size){
+        queuearray=new double(size);
+        qsize=size;
+        top=-1;
+
+        rear=-1;
+    }
+    ~queue(){
+        delete[]queuearray;
+    }
+
+    bool isfull();
+    bool isempty();
+    void enqueue(double val);
+    void dequeue();
+    void traverse();
+};
+bool queue::isfull(){
+    if(rear==qsize-1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+bool queue::isempty(){
+    if(top==-1 && rear==-1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+void queue::enqueue(double val){
+    if(isfull()){
+        cout<<"QUEUE IS FULL.."<<endl;
+    }
+    else{
+        if(top==-1){
+            top=0;
+        }
+        
+            rear++;
+            queuearray[rear]=val;
+        
+    }
+}
+void queue::dequeue(){
+    if(isempty()){
+        cout<<"Queue is already empty.."<<endl;
+    }
+    else{
+        cout<<queuearray[top]<<"is dequeue from queue"<<endl;
+        if(top==rear){
+            top=rear=-1;
+        }
+        else{
+            top--;
+        }
+    }
+}
+void queue::traverse(){
+    if(isempty()){
+        cout<<"QUEUE is empty.."<<endl;
+    }
+    else{
+    for(int i=top;i<=rear;i++){
+        cout<<queuearray[i]<<" ";
+    }
+    cout<<endl;}
+}
+int main(){
+    cout<<"Enter the size of Queue.."<<endl;
+    int size;
+    cin>>size;
+    queue q(size);
+    while(true){
+        cout<<"Welcome to Main Menu..\n1. For Enqueue\n2. For Dequeue\n3. Traverse"<<endl;
+        int ch;
+        cin>>ch;
+        switch (ch)
+        {
+        case 1:
+            double val1;
+            cout<<"Enter the value you want to enqueue..."<<endl;
+            cin>>val1;
+            q.enqueue(val1);
+            break;
+        case 2:
+            q.dequeue();
+            break;
+        case 3:
+            cout<<"The elements in queue are: ";
+            q.traverse();
+            break;
+        
+        default:
+            cout<<"Invalid.."<<endl;
+            
+        }
+        cout<<endl<<"Enter n to exit or press any key to continue.."<<endl;
+        char c;
+        cin>>c;
+        c=tolower(c);
+        if(c=='n'){
+            break;
+        }
+        else{
+            continue;
+        }
+    }
+}
