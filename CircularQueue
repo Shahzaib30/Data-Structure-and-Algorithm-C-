@@ -1,0 +1,132 @@
+#include<iostream>
+using namespace std;
+class Circular_queue{
+    private:
+        int *queuearray;
+        int queue_size;
+        int front;
+        int rear;
+    public:
+        Circular_queue(int size){
+            queuearray=new int(size);
+            queue_size=size;
+            front=-1;
+            rear=-1;
+        }
+        ~Circular_queue(){
+            delete[]queuearray;
+        }
+    bool isempty(){
+        if(front==-1 && rear==-1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    bool isfull(){
+        if(front==0 && rear==queue_size-1 && front==rear+1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    void Enqueue(int val){
+        if(isfull()){
+            cout<<"Queue is already full.."<<endl;
+        }
+        else{
+            if(front==-1){
+                front=0;
+            }
+            rear=(rear+1)%queue_size;
+            queuearray[rear]=val;
+        }
+    }
+    void Dequeue(){
+        if(isempty()){
+            cout<<"Queue is Empty.."<<endl;\
+
+        }
+        else{
+            cout<<queuearray[front]<<" is successfully DEQUEUE from queue.."<<endl;
+            if(front==rear){
+                front=rear=-1;
+            }
+            else{
+                front=(front+1)%queue_size;      /*e.g suppose front is 2 and queue size is 5 then = 1
+                                                it will reverse the one value before*/
+            }
+        }
+    }
+    void traverse(){
+        if(isempty()){
+            cout<<"Queue is already empty.."<<endl;
+        }
+        else if( front<=rear){
+            for (int i = front; i <= rear; i++)
+            {
+                cout<<queuearray[i]<<" ";
+            }
+            
+        }
+        else if(front > rear){
+            for (int i = front; i < queue_size; i++)
+            {
+                cout<<queuearray[i]<<" ";
+            }
+            for (int i = 0; i <=rear; i++){
+                cout<<queuearray[i]<<" ";
+            }
+            {
+                /* code */
+            }
+            
+            
+        }
+
+    }
+};
+int main(){
+
+cout<<"Enter the size of Queue.."<<endl;
+    int size;
+    cin>>size;
+    Circular_queue q(size);
+    while(true){
+        cout<<"Welcome to Main Menu..\n1. For Enqueue\n2. For Dequeue\n3. Traverse"<<endl;
+        int ch;
+        cin>>ch;
+        switch (ch)
+        {
+        case 1:
+            double val1;
+            cout<<"Enter the value you want to enqueue..."<<endl;
+            cin>>val1;
+            q.Enqueue(val1);
+            break;
+        case 2:
+            q.Dequeue();
+            break;
+        case 3:
+            cout<<"The elements in queue are: ";
+            q.traverse();
+            break;
+        
+        default:
+            cout<<"Invalid.."<<endl;
+            
+        }
+        cout<<endl<<"Enter n to exit or press any key to continue.."<<endl;
+        char c;
+        cin>>c;
+        c=tolower(c);
+        if(c=='n'){
+            break;
+        }
+        else{
+            continue;
+        }
+    }
+}
