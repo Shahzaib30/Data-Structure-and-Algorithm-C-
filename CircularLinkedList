@@ -1,0 +1,279 @@
+#include<iostream>
+using namespace std;
+class node{
+    public:
+        node* next;
+        int data;
+        node(int d=0,node*n=0){
+            data=d;
+            next=n;
+        }
+};
+
+class linkedlist{
+    private:
+    node*head;
+    public:
+    linkedlist(){
+        head=0;
+    }
+
+    void inserthead(int val);
+    void insertlast(int val);
+    void insertafter(int exist, int val);
+    void insertbefore(int exist, int val);
+    void deletehead();
+    void deletelast();
+    void deletespecific(int del);
+    void traverse();
+
+
+};
+
+void linkedlist::inserthead(int val){
+    node* newnode=new node(val);
+    if(head==0){
+        head=newnode;
+        newnode->next=head;
+
+    }
+    else{
+        node* currnode=head;
+        while(currnode->next!=head){
+            currnode=currnode->next;
+        }
+        newnode->next=head;
+        currnode->next=newnode;
+        head=newnode;
+ 
+    }
+}
+
+void linkedlist::insertlast(int val){
+    node* newnode=new node(val);
+    if(head==0){
+        
+        head=newnode;
+        newnode->next=head;
+    }
+    else{
+        node* currnode = head;
+        while(currnode->next!=head){
+            currnode=currnode->next;
+        }
+        
+        newnode->next=currnode->next;
+        currnode->next=newnode;
+    }
+}
+void linkedlist::insertafter(int exist, int val){
+
+    if(head==0){
+        cout<<"List is already empty.."<<endl;
+    }
+    
+    else{
+        node* currnode=head;
+        while(currnode->next!=head && currnode->data!=exist){
+            currnode=currnode->next;
+        }
+        if(currnode->data!=exist){
+            cout<<"vale is not Presnt in the list.."<<endl;
+        }
+        else{
+        node* newnode=new node(val);
+        newnode->next=currnode->next;      
+        currnode->next=newnode;
+        }
+
+            
+        
+    }
+}
+void linkedlist::insertbefore(int exist,int val){
+    if(head==0){
+        cout<<"List is already Empty.."<<endl;
+    }
+    else if(head->data==exist){
+        inserthead(val);
+    }
+    else{
+        node* currnode=head;
+        node* prev=0;
+        while(currnode->next!=head && currnode->data!=exist){
+            prev=currnode;
+            currnode=currnode->next;
+        }
+        if(currnode->data!=exist){
+            cout<<"Value is not present.."<<endl;
+        }
+        else{
+        node* newnode=new node(val);
+        newnode->next=currnode;
+        prev->next=newnode;
+
+        }
+    }
+    }
+void linkedlist::deletehead(){
+    if(head==0){
+        cout<<"List is already empty.."<<endl;
+    }
+    else{
+        node* currnode=head;
+        while(currnode->next!=head){
+            currnode=currnode->next;
+        }
+        currnode->next=head->next;
+        delete head;
+        head=currnode->next;
+        
+    }
+}
+
+void linkedlist::deletelast(){
+    if(head==0){
+        cout<<"List is already empty.."<<endl;
+    }
+    else{
+        node* currnode=head;
+        node* prev=0;
+        while(currnode->next!=head){
+            prev=currnode;
+            currnode=currnode->next;
+        }
+        prev->next=currnode->next;
+        currnode->next=0;
+        delete currnode;
+
+    }
+}
+
+void linkedlist::deletespecific(int del){
+    if(head==0){
+        cout<<"List is already empty.."<<endl;
+    }
+    else if(head->data==del){
+        deletehead();
+
+    }
+    else{
+        node* currnode=head;
+        node* prevnode=0;
+        while(currnode->next!=head && currnode->data!=del){
+            prevnode=currnode;
+            currnode=currnode->next;
+        }
+        prevnode->next=currnode->next;
+        currnode->next=0;
+        delete currnode;
+    }
+}
+
+void linkedlist::traverse(){
+    if(head==0){
+        cout<<"list is already empty.."<<endl;
+    }
+    else{
+        node* currnode=head;
+        do{
+            cout<<currnode->data<<" ";
+            currnode=currnode->next;
+        }
+        while(currnode!=head);
+    }
+}
+int main(){
+    linkedlist ls;
+    int val1,val2,val3,val4,existing1,existing2,choice1,choice2;
+    while(true){
+        cout<<"Welcome to Main Menu..\n1. For Insert\n2. For Delete\n3. Traverse"<<endl;
+        int ch;
+        cin>>ch;
+        switch (ch)
+        {
+        case 1:
+            int c1;
+            cout<<"1. For Insert From head\n2. For Insert From tail\n3. Insert After\n4. Insert Before"<<endl;
+            cin>>c1;
+            switch (c1)
+            {
+            case 1:
+                cout<<"Enter the value you want to insert at head : ";
+                cin>>val1;
+                ls.inserthead(val1);
+                break;
+            case 2:
+                cout<<"Enter the value you want to insert at tail : ";
+                cin>>val2;
+                ls.insertlast(val2);
+                break;
+            case 3:
+                cout<<"Enter the value you want to insert after : ";
+                cin>>val3;
+                cout<<"Enter the existing value: ";
+                
+                cin>>existing1;
+                ls.insertafter(val3,existing1);
+
+                break;
+            case 4:
+                cout<<"Enter the value you want to insert before : ";
+                cin>>val4;
+                cout<<"Enter the existing value: ";
+                cin>>existing2;
+                ls.insertbefore(val4,existing2);
+
+                break;
+            
+            default:
+            cout<<"Invalid choice.."<<endl;
+                break;
+            }
+            break;
+        case 2:
+        cout<<"1: For Delete from head\n2. For Delete from tail\n3. Delete Specific"<<endl;
+        cin>>choice1;
+        switch (choice1)
+        {
+        case 1:
+            ls.deletehead();
+            break;
+        case 2:
+            ls.deletelast();
+            break;
+        case 3:
+            cout<<"Enter the no you want to delete.."<<endl;
+            int del;
+            cin>>del;
+            ls.deletespecific(del);
+            break;
+        
+        default:
+        cout<<"Invalid choice"<<endl;
+            break;
+        }
+            
+            break;
+        case 3:
+            ls.traverse();
+            break;
+        
+        default:
+            cout<<"Invalid.."<<endl;
+            
+        }
+        cout<<endl<<"Enter n to exit or press any key to continue.."<<endl;
+        char c;
+        cin>>c;
+        c=tolower(c);
+        if(c=='n'){
+            break;
+        }
+        else{
+            continue;
+        }
+    }
+    
+    
+}
